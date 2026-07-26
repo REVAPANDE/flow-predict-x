@@ -38,20 +38,20 @@ export const overviewKpis: Kpi[] = [
 export const trafficTrend = Array.from({ length: 24 }, (_, h) => {
   const base = 1800 + Math.sin((h / 24) * Math.PI * 2) * 900;
   const peaks = h === 8 || h === 18 ? 1400 : h === 9 || h === 17 ? 900 : 0;
-  const actual = Math.max(400, Math.round(base + peaks + (Math.random() - 0.5) * 200));
-  const predicted = Math.max(400, Math.round(actual + (Math.random() - 0.5) * 180));
+  const actual = Math.max(400, Math.round(base + peaks + (rand() - 0.5) * 200));
+  const predicted = Math.max(400, Math.round(actual + (rand() - 0.5) * 180));
   return { hour: String(h).padStart(2, "0") + ":00", actual, predicted };
 });
 
 export const weeklyTraffic = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map((d, i) => ({
   day: d,
-  volume: 32000 + i * 1400 + (i >= 5 ? -6000 : 0) + Math.round(Math.random() * 2000),
-  congestion: 55 + (i >= 5 ? -12 : 6) + Math.round(Math.random() * 6),
+  volume: 32000 + i * 1400 + (i >= 5 ? -6000 : 0) + Math.round(rand() * 2000),
+  congestion: 55 + (i >= 5 ? -12 : 6) + Math.round(rand() * 6),
 }));
 
 export const monthlyTrend = Array.from({ length: 12 }, (_, i) => ({
   month: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][i],
-  volume: 900000 + Math.round(Math.sin(i / 2) * 80000 + Math.random() * 40000),
+  volume: 900000 + Math.round(Math.sin(i / 2) * 80000 + rand() * 40000),
 }));
 
 export const congestionHeatmap = Array.from({ length: 7 }, (_, d) =>
@@ -59,7 +59,7 @@ export const congestionHeatmap = Array.from({ length: 7 }, (_, d) =>
     const peak = (h >= 7 && h <= 10) || (h >= 16 && h <= 19);
     const weekend = d >= 5;
     const base = peak ? 75 : h < 6 ? 15 : 45;
-    return Math.max(5, Math.min(98, base + (weekend ? -15 : 0) + Math.round(Math.random() * 15)));
+    return Math.max(5, Math.min(98, base + (weekend ? -15 : 0) + Math.round(rand() * 15)));
   }),
 );
 
@@ -96,11 +96,11 @@ export const datasetRows = Array.from({ length: 20 }, (_, i) => ({
   timestamp: `2024-06-${String(1 + (i % 30)).padStart(2, "0")} ${String(i % 24).padStart(2, "0")}:00`,
   hour: i % 24,
   dayOfWeek: i % 7,
-  temp: +(22 + Math.random() * 12).toFixed(1),
-  rainfall: +(Math.random() * 4).toFixed(2),
-  cloud: Math.round(Math.random() * 100),
+  temp: +(22 + rand() * 12).toFixed(1),
+  rainfall: +(rand() * 4).toFixed(2),
+  cloud: Math.round(rand() * 100),
   holiday: i % 11 === 0 ? 1 : 0,
-  volume: 1200 + Math.round(Math.random() * 3800),
+  volume: 1200 + Math.round(rand() * 3800),
 }));
 
 export const featureDistributions = [
