@@ -3,6 +3,19 @@
 const wait = <T>(data: T, ms = 300): Promise<T> =>
   new Promise((resolve) => setTimeout(() => resolve(data), ms));
 
+// Deterministic PRNG so SSR and client produce identical mock data (no hydration mismatch).
+function mulberry32(seed: number) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const rand = mulberry32(20240630);
+
 export interface Kpi {
   label: string;
   value: string | number;
